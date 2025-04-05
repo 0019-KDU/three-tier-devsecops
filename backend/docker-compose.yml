@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  db:
+    platform: "linux/amd64"
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: devops_user
+      POSTGRES_PASSWORD: devops_password
+      POSTGRES_DB: devops_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - devops_network
+
+  # backend:
+  #   build: .
+  #   container_name: devops_backend
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     DATABASE_URL: postgres://devops_user:devops_password@db:5432/devops_db
+  #   volumes:
+  #     - .:/home/devops-backend
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - devops_network
+  #   entrypoint: ["/home/docker/scripts/boot.sh"]
+
+volumes:
+  postgres_data:
+
+networks:
+  devops_network:
+    driver: bridge
