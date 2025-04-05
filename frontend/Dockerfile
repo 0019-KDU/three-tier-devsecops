@@ -4,6 +4,6 @@ COPY package.json /app/
 RUN npm install --legacy-peer-deps
 COPY . /app/
 RUN npm run build
-RUN npm install -g serve@14.2.0  # Explicit version
+RUN npm install -g serve@13.0.2  # Version with -l support
 EXPOSE 5173
-CMD ["serve", "-s", "dist", "--port", "5173"]  # --port flag
+CMD ["serve", "-s", "dist", "-l", "5173"]  # Correct flag syntax
