@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -10,7 +10,15 @@ import "./App.css";
 
 function App() {
   const [students, setStudents] = useState([]);
-  const columns = React.useMemo(
+  const [showCansel, setShowCansel] = useState(false);
+
+  const [studentData, setStudentData] = useState({
+    name: "",
+    email: "",
+    roleNumber: "",
+  });
+
+  const columns = useMemo(
     () => [
       {
         Header: "StudentId",
@@ -58,8 +66,7 @@ function App() {
     []
   );
 
-  const data = React.useMemo(() => students, [students]);
-  const [showCansel, setShowCansel] = useState(false);
+  const data = useMemo(() => students, [students]);
 
   const {
     getTableProps,
@@ -81,19 +88,13 @@ function App() {
   } = useTable(
     {
       columns,
-      data: students,
+      data,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useGlobalFilter,
     useSortBy,
     usePagination
   );
-
-  const [studentData, setStudentData] = useState({
-    name: "",
-    email: "",
-    roleNumber: "",
-  });
 
   const getAllStudents = () => {
     axios
@@ -105,7 +106,7 @@ function App() {
       });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getAllStudents();
   }, []);
 
@@ -140,6 +141,7 @@ function App() {
       roleNumber: "",
     });
     getAllStudents();
+    setShowCansel(false);
   };
 
   const populateStudent = (std) => {
@@ -153,12 +155,7 @@ function App() {
   };
 
   const handleCansel = () => {
-    setStudentData({
-      name: "",
-      email: "",
-      roleNumber: "",
-    });
-    setShowCansel(true);
+    clearAll();
   };
 
   const handleDelete = async (id) => {
@@ -177,10 +174,10 @@ function App() {
   };
 
   return (
-    <>
-      <div className="std-container">
-        <h3>Three-tire Application</h3>
-        <div className="addeditpn">
+    <div className="std-container">
+      <h3>Three-tire Application</h3>
+      <div className="main-layout">
+        <div className="form-section">
           <div className="addeditpndiv">
             <label htmlFor="name">Name</label>
             <br />
@@ -228,68 +225,91 @@ function App() {
             Cancel
           </button>
         </div>
-        <input
-          className="insearch"
-          type="search"
-          name="inputsearch"
-          id="inputsearch"
-          value={globalFilter || ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search Students Here"
-        />
-        <table className="std-table" {...getTableProps()}>
-          {/* Table header remains the same */}
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.id}>
-                      {cell.render("Cell")}
-                    </td>
+
+        <div className="table-section">
+          <input
+            className="insearch"
+            type="search"
+            name="inputsearch"
+            id="inputsearch"
+            value={globalFilter || ""}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search Students Here"
+          />
+          <table className="std-table" {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      key={column.id}
+                    >
+                      {column.render("Header")}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? " 🔽"
+                            : " 🔼"
+                          : ""}
+                      </span>
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        {/* Pagination controls */}
-        <div className="pagination">
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {"<<"}
-          </button>
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {"<"}
-          </button>
-          <span>
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>
-          </span>
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {">"}
-          </button>
-          <button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            {">>"}
-          </button>
-          <select
-            value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
-          >
-            {[5, 10, 20].map((size) => (
-              <option key={size} value={size}>
-                Show {size}
-              </option>
-            ))}
-          </select>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={row.id}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} key={cell.id}>
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
+          <div className="pagination">
+            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+              {"<<"}
+            </button>
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {"<"}
+            </button>
+            <span>
+              Page{" "}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>
+            </span>
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {">"}
+            </button>
+            <button
+              onClick={() => gotoPage(pageCount - 1)}
+              disabled={!canNextPage}
+            >
+              {">>"}
+            </button>
+            <select
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
+              {[5, 10, 20].map((size) => (
+                <option key={size} value={size}>
+                  Show {size}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

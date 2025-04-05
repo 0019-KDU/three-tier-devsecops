@@ -110,3 +110,20 @@ tr:nth-child(even) {
 .pagination select {
   padding: 0.25rem;
 }
+
+.main-layout {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.form-section {
+  flex: 1;
+  max-width: 40%;
+}
+
+.table-section {
+  flex: 2;
+  max-width: 60%;
+}

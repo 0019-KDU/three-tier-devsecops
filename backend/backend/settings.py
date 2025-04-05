@@ -77,27 +77,27 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'devops_db',
-        'USER':'devops_user',
-        'PASSWORD':'devops_password',
-        'HOST':'postgres-svc',
-        'PORT':'5432',
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'three-tire',
-#         'USER':'postgres',
-#         'PASSWORD':'12345q',
-#         'HOST':'localhost',
+#         'NAME': 'devops_db',
+#         'USER':'devops_user',
+#         'PASSWORD':'devops_password',
+#         'HOST':'postgres-svc',
 #         'PORT':'5432',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'three-tire',
+        'USER':'postgres',
+        'PASSWORD':'12345q',
+        'HOST':'localhost',
+        'PORT':'5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
