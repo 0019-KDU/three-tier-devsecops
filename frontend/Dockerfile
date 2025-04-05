@@ -14,8 +14,11 @@ COPY . /app/
 # Build the React app
 RUN npm run build
 
+# Install serve globally to serve static files
+RUN npm install -g serve
+
 # Expose the port
 EXPOSE 5173
 
 # Serve the built files
-CMD ["serve", "-s", "dist", "-l", "5173"]
+CMD [ "serve", "-s", "dist" ]
