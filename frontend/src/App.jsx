@@ -96,9 +96,13 @@ function App() {
   });
 
   const getAllStudents = () => {
-    axios.get("http://127.0.0.1:8000/api/users/").then((res) => {
-      setStudents(res.data);
-    });
+    axios
+      .get(
+        "http://k8s-threetie-threetie-93f89d5f7a-301963302.us-east-1.elb.amazonaws.com/api/api/users/"
+      )
+      .then((res) => {
+        setStudents(res.data);
+      });
   };
 
   React.useEffect(() => {
@@ -114,11 +118,14 @@ function App() {
     try {
       if (studentData.id) {
         await axios.put(
-          `http://127.0.0.1:8000/api/users/${studentData.id}/`,
+          `http://k8s-threetie-threetie-93f89d5f7a-301963302.us-east-1.elb.amazonaws.com/api/api/users/${studentData.id}/`,
           studentData
         );
       } else {
-        await axios.post("http://127.0.0.1:8000/api/users/", studentData);
+        await axios.post(
+          "http://k8s-threetie-threetie-93f89d5f7a-301963302.us-east-1.elb.amazonaws.com/api/api/users/",
+          studentData
+        );
       }
       clearAll();
     } catch (error) {
@@ -157,7 +164,9 @@ function App() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/users/${id}/`);
+        await axios.delete(
+          `http://k8s-threetie-threetie-93f89d5f7a-301963302.us-east-1.elb.amazonaws.com/api/api/users/${id}/`
+        );
         setStudents((prevStudents) =>
           prevStudents.filter((std) => std.id !== id)
         );
