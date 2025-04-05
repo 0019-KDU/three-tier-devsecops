@@ -29,6 +29,18 @@ spec:
           imagePullPolicy: Always
           env:
             - name: REACT_APP_BACKEND_URL
-              value: "/api"
+              value: "http://k8s-threetie-threetie-93f89d5f7a-301963302.us-east-1.elb.amazonaws.com/api"
           ports:
             - containerPort: 5173
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5173
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5173
+            initialDelaySeconds: 3
+            periodSeconds: 5
