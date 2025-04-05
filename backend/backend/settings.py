@@ -88,6 +88,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'three-tire',
+#         'USER':'postgres',
+#         'PASSWORD':'12345q',
+#         'HOST':'localhost',
+#         'PORT':'5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -133,6 +143,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173","http://192.168.52.250:5173",]
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173","http://192.168.52.250:5173","http://k8s-threetie-threetie-93f89d5f7a-301963302.us-east-1.elb.amazonaws.com",]
 ALLOWED_HOSTS = ['*']
 
