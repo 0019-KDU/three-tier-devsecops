@@ -468,8 +468,14 @@ This step does not include any commands; please refer to the video for instructi
   <tr>
     <td><img src="docs/24.png" alt="Alt text for image 24" width="200"></td>
     <td><img src="docs/25.png" alt="Alt text for image 25" width="200"></td>
-    <td></td>
-    <td></td>
+     <td><img src="docs/26.png" alt="Alt text for image 24" width="200"></td>
+    <td><img src="docs/27.png" alt="Alt text for image 25" width="200"></td>
+  </tr>
+   <tr>
+    <td><img src="docs/28.png" alt="Alt text for image 24" width="200"></td>
+    <td><img src="docs/29.png" alt="Alt text for image 25" width="200"></td>
+     <td><img src="docs/30.png" alt="Alt text for image 24" width="200"></td>
+    <td><img src="docs/31.png" alt="Alt text for image 25" width="200"></td>
   </tr>
 </table>
 
