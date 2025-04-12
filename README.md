@@ -2,6 +2,8 @@
 
 # 🚀 DevSecOps E2E Deployment on AWS EKS with GitOps, Jenkins, Trivy, ArgoCD, Prometheus, and Terraform
 
+![Alt text](docs/digram.png)
+
 This project is a **complete DevSecOps implementation** showcasing how to build, scan, monitor, and deploy a production-grade **three-tier web application** on **AWS EKS**, with full automation using **Jenkins**, **Terraform**, **ArgoCD**, **Prometheus**, **Grafana**, **Trivy**, and **SonarQube**.
 
 ---
